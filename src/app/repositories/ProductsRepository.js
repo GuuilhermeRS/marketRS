@@ -25,6 +25,18 @@ class ProductsRepository {
     `, [id, name, price, quantity_in_stock]);
     return row;
   }
+
+  async update({
+    id, name, price, quantity_in_stock
+  }) {
+    const [row] = await db.query(`
+      UPDATE products
+      SET name = $1, price = $2, quantity_in_stock = $3
+      WHERE id = $4
+      RETURNING *
+    `, [name, price, quantity_in_stock, id]);
+    return row;
+  }
 }
 
 module.exports = new ProductsRepository();

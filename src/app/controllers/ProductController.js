@@ -12,7 +12,7 @@ class ProductController {
     const product = await ProductsRepository.findById(id);
 
     if(!product) {
-      response.status(404).json({error: 'Product not found'});
+      return response.status(404).json({error: 'Product not found'});
     }
 
     response.json(product);
@@ -28,7 +28,7 @@ class ProductController {
     }
 
     if (!name) {
-      response.status(400).json({ error: 'Name is required' });
+      return response.status(400).json({ error: 'Name is required' });
     }
 
     const product = await ProductsRepository.create({
@@ -36,6 +36,27 @@ class ProductController {
     });
 
     return response.json(product);
+  }
+
+  async update(request, response) {
+    const { id } = request.params;
+    const { name, price, quantity_in_stock } = request.body;
+
+    const productExist = await ProductsRepository.findById(id);
+    if(!productExist) {
+      return response.status(404).json({ error: 'User not found' });
+    }
+
+    if(!name) {
+      return response.status(404).json({ error: 'Name is required' });
+    }
+
+    const product = await ProductsRepository.update({
+      id, name, price, quantity_in_stock
+    });
+
+    response.json(product);
+    
   }
 }
 
