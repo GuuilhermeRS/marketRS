@@ -6,6 +6,15 @@ class ProductsRepository {
     return rows;
   }
 
+  async findById(id) {
+    const [row] = await db.query(`
+      SELECT * FROM products
+      WHERE id = $1
+    `, [id]);
+
+    return row;
+  }
+
   async create({
     id, name, price, quantity_in_stock,
   }) {

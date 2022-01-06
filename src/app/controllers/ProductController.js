@@ -7,6 +7,17 @@ class ProductController {
     response.json(products);
   }
 
+  async show(request, response) {
+    const { id } = request.body;
+    const product = await ProductsRepository.findById(id);
+
+    if(!product) {
+      response.status(404).json({error: 'Product not found'});
+    }
+
+    response.json(product);
+  }
+
   async store(request, response) {
     const {
       id, name, price, quantity_in_stock,
