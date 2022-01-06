@@ -37,6 +37,11 @@ class ProductsRepository {
     `, [name, price, quantity_in_stock, id]);
     return row;
   }
+
+  async delete(id) {
+    const deleteOp = db.query('DELETE products WHERE id = $1', [id]);
+    return deleteOp;
+  }
 }
 
 module.exports = new ProductsRepository();

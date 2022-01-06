@@ -58,6 +58,14 @@ class ProductController {
     response.json(product);
     
   }
+
+  async delete(request, response) {
+    const { id } = request.params;
+
+    await ProductsRepository.delete(id);
+
+    response.status(204);
+  }
 }
 
 module.exports = new ProductController();
