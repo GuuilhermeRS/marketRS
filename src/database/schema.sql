@@ -1,8 +1,17 @@
 CREATE DATABASE marketrs;
 
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 CREATE TABLE IF NOT EXISTS products (
   id INT PRIMARY KEY,
   name VARCHAR NOT NULL,
   price NUMERIC(10,2) NOT NULL,
   quantity_in_stock INT
+);
+
+CREATE TABLE IF NOT EXISTS users (
+  id UUID NOT NULL UNIQUE DEFAULT uuid_generate_v4(),
+  name VARCHAR NOT NULL,
+  email VARCHAR UNIQUE,
+  phone VARCHAR
 );
