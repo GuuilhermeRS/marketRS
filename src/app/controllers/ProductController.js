@@ -45,11 +45,11 @@ class ProductController {
 
     const productExist = await ProductsRepository.findById(id);
     if (!productExist) {
-      return response.status(404).json({ error: 'User not found' });
+      return response.status(404).json({ error: 'Product not found' });
     }
 
     if (!name) {
-      return response.status(404).json({ error: 'Name is required' });
+      return response.status(400).json({ error: 'Name is required' });
     }
 
     const product = await ProductsRepository.update({

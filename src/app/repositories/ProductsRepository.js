@@ -42,8 +42,8 @@ class ProductsRepository {
     return row;
   }
 
-  async delete(product_id) {
-    const deleteOp = await db.query('DELETE FROM products WHERE id = $1', [product_id]);
+  async delete(id) {
+    const deleteOp = await db.query('DELETE FROM products WHERE id = $1', [id]);
     return deleteOp;
   }
 }
