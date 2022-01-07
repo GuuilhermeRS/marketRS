@@ -27,19 +27,19 @@ class ProductsRepository {
   }
 
   async update({
-    id, name, price, quantity_in_stock
+    id, name, price, quantity_in_stock,
   }) {
     const [row] = await db.query(`
       UPDATE products
-      SET name = $1, price = $2, quantity_in_stock = $3
-      WHERE id = $4
+      SET name = $2, price = $3, quantity_in_stock = $4
+      WHERE id = $1
       RETURNING *
-    `, [name, price, quantity_in_stock, id]);
+    `, [id, name, price, quantity_in_stock]);
     return row;
   }
 
-  async delete(id) {
-    const deleteOp = db.query('DELETE products WHERE id = $1', [id]);
+  async delete(product_id) {
+    const deleteOp = await db.query('DELETE FROM products WHERE id = $1', [product_id]);
     return deleteOp;
   }
 }

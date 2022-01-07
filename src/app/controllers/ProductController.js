@@ -8,11 +8,11 @@ class ProductController {
   }
 
   async show(request, response) {
-    const { id } = request.body;
+    const { id } = request.params;
     const product = await ProductsRepository.findById(id);
 
-    if(!product) {
-      return response.status(404).json({error: 'Product not found'});
+    if (!product) {
+      return response.status(404).json({ error: 'Product not found' });
     }
 
     response.json(product);
@@ -43,20 +43,19 @@ class ProductController {
     const { name, price, quantity_in_stock } = request.body;
 
     const productExist = await ProductsRepository.findById(id);
-    if(!productExist) {
+    if (!productExist) {
       return response.status(404).json({ error: 'User not found' });
     }
 
-    if(!name) {
+    if (!name) {
       return response.status(404).json({ error: 'Name is required' });
     }
 
     const product = await ProductsRepository.update({
-      id, name, price, quantity_in_stock
+      id, name, price, quantity_in_stock,
     });
 
     response.json(product);
-    
   }
 
   async delete(request, response) {
@@ -64,7 +63,7 @@ class ProductController {
 
     await ProductsRepository.delete(id);
 
-    response.status(204);
+    response.sendStatus(204);
   }
 }
 
