@@ -1,8 +1,12 @@
 const db = require('../../database');
 
 class ProductsRepository {
-  async find() {
-    const rows = await db.query('SELECT * FROM products;');
+  async find(orderBy = 'ASC') {
+    const direction = orderBy.toUpperCase() === 'DESC' ? 'DESC' : 'ASC';
+    const rows = await db.query(`
+      SELECT * FROM products
+      ORDER BY id ${direction};
+    `);
     return rows;
   }
 

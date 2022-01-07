@@ -2,7 +2,8 @@ const ProductsRepository = require('../repositories/ProductsRepository');
 
 class ProductController {
   async index(request, response) {
-    const products = await ProductsRepository.find();
+    const { orderBy } = request.query;
+    const products = await ProductsRepository.find(orderBy);
 
     response.json(products);
   }
